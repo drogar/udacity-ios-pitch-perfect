@@ -28,18 +28,18 @@ class PlaySoundViewController: UIViewController {
     }
     
     @IBAction func playSoundSlowly(sender: UIButton) {
-        self.playSomeAudio(0.5, pitchChange: nil)
+        playSomeAudio(0.5, pitchChange: nil)
     }
     @IBAction func playSoundFast(sender: UIButton) {
-        self.playSomeAudio(2.0, pitchChange: nil)
+        playSomeAudio(2.0, pitchChange: nil)
     }
 
     @IBAction func playChipmunkAudio(sender: UIButton) {
-        self.playSomeAudio(nil, pitchChange: 1000)
+        playSomeAudio(nil, pitchChange: 1000)
     }
     
     @IBAction func playDarthAudio(sender: UIButton) {
-        self.playSomeAudio(nil, pitchChange: -500)
+        playSomeAudio(nil, pitchChange: -500)
     }
     
     func playSomeAudio(rateChange: Float?, pitchChange: Float?) {
