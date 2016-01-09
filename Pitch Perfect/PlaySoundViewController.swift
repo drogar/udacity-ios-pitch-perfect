@@ -43,17 +43,8 @@ class PlaySoundViewController: UIViewController {
     }
     
     func playSomeAudio(rateChange: Float?, pitchChange: Float?) {
+        let audioPlayerNode = startAudioSession()
         
-        let audioSession = AVAudioSession.sharedInstance()
-        
-        try! audioSession.setCategory(AVAudioSessionCategoryPlayback)
-        try! audioSession.setActive(true)
-
-        let audioPlayerNode = AVAudioPlayerNode()
-        
-        audioPlayerNode.stop()
-        audioEngine.stop()
-        audioEngine.reset()
         let timePitch = AVAudioUnitTimePitch()
         
         if let newPitch = pitchChange {
@@ -64,41 +55,46 @@ class PlaySoundViewController: UIViewController {
             timePitch.rate = newRate
         }
         
-        audioEngine.attachNode(audioPlayerNode)
-        audioEngine.attachNode(timePitch)
-        
-        audioEngine.connect(audioPlayerNode, to: timePitch, format: audioFile.processingFormat)
-        audioEngine.connect(timePitch, to: audioEngine.outputNode, format: audioFile.processingFormat)
+        configureAudioEngine(audioPlayerNode, effect: timePitch)
         
         audioPlayerNode.scheduleFile(audioFile, atTime: nil, completionHandler: nil)
         
-        do
-        {
+        do {
             try audioEngine.start()
             audioPlayerNode.play()
         }
         catch {
             print("unable to play")
         }
-
     }
     
     @IBAction func stopPlayback(sender: UIButton) {
         audioEngine.stop()
+        audioEngine.reset()
         
         let audioSession = AVAudioSession.sharedInstance()
         try! audioSession.setActive(false)
-
+    }
+    
+    func startAudioSession() -> AVAudioPlayerNode {
+        let audioSession = AVAudioSession.sharedInstance()
+        
+        try! audioSession.setCategory(AVAudioSessionCategoryPlayback)
+        try! audioSession.setActive(true)
+        
+        let audioPlayerNode = AVAudioPlayerNode()
+        
+        audioPlayerNode.stop()
+        audioEngine.stop()
         audioEngine.reset()
+        return audioPlayerNode
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    func configureAudioEngine(playerNode: AVAudioPlayerNode, effect: AVAudioUnitTimePitch) {
+        audioEngine.attachNode(playerNode)
+        audioEngine.attachNode(effect)
+        
+        audioEngine.connect(playerNode, to: effect, format: audioFile.processingFormat)
+        audioEngine.connect(effect, to: audioEngine.outputNode, format: audioFile.processingFormat)
     }
-    */
-
 }

@@ -39,6 +39,7 @@ class RecordSoundViewController: UIViewController, AVAudioRecorderDelegate {
         super.viewWillAppear(animated)
         stopButton.hidden = true
         recordButton.enabled = true
+        recordingInProgress.text = "Tap microphone to record"
     }
 
 
@@ -46,7 +47,7 @@ class RecordSoundViewController: UIViewController, AVAudioRecorderDelegate {
         let audioSession = AVAudioSession.sharedInstance()
         try! audioSession.setActive(true)
         
-        recordingInProgress.hidden = false
+        recordingInProgress.text = "Recording"
         stopButton.hidden = false
         recordButton.enabled = false
         
@@ -64,7 +65,7 @@ class RecordSoundViewController: UIViewController, AVAudioRecorderDelegate {
         audioRecorder.stop()
         let audioSession = AVAudioSession.sharedInstance()
         try! audioSession.setActive(false)
-        recordingInProgress.hidden = true
+        recordingInProgress.text = "Tap microphone to record"
         recordButton.enabled = true
         stopButton.hidden = true
     }
