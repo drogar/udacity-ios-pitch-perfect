@@ -69,8 +69,7 @@ class PlaySoundViewController: UIViewController {
     }
     
     @IBAction func stopPlayback(sender: UIButton) {
-        audioEngine.stop()
-        audioEngine.reset()
+        stopAndResetEngine()
         
         let audioSession = AVAudioSession.sharedInstance()
         try! audioSession.setActive(false)
@@ -85,8 +84,8 @@ class PlaySoundViewController: UIViewController {
         let audioPlayerNode = AVAudioPlayerNode()
         
         audioPlayerNode.stop()
-        audioEngine.stop()
-        audioEngine.reset()
+        stopAndResetEngine()
+        
         return audioPlayerNode
     }
     
@@ -96,5 +95,10 @@ class PlaySoundViewController: UIViewController {
         
         audioEngine.connect(playerNode, to: effect, format: audioFile.processingFormat)
         audioEngine.connect(effect, to: audioEngine.outputNode, format: audioFile.processingFormat)
+    }
+    
+    func stopAndResetEngine() {
+        audioEngine.stop()
+        audioEngine.reset()
     }
 }
