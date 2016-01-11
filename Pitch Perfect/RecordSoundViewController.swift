@@ -19,7 +19,8 @@ class RecordSoundViewController: UIViewController, AVAudioRecorderDelegate {
     @IBOutlet weak var recordingInProgress: UILabel!
     @IBOutlet weak var stopButton: UIButton!
     @IBOutlet weak var recordButton: UIButton!
-    
+    @IBOutlet weak var pauseResumeButton: UIButton!
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -38,6 +39,7 @@ class RecordSoundViewController: UIViewController, AVAudioRecorderDelegate {
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
         stopButton.hidden = true
+        pauseResumeButton.hidden = true
         recordButton.enabled = true
         recordingInProgress.text = "Tap microphone to record"
     }
@@ -50,6 +52,8 @@ class RecordSoundViewController: UIViewController, AVAudioRecorderDelegate {
         recordingInProgress.text = "Recording"
         stopButton.hidden = false
         recordButton.enabled = false
+        pauseResumeButton.setImage(UIImage.init(named: "Pause"), forState: UIControlState.Normal)
+        pauseResumeButton.hidden = false
         
         let session = AVAudioSession.sharedInstance()
         try! session.setCategory(AVAudioSessionCategoryPlayAndRecord)
@@ -61,6 +65,18 @@ class RecordSoundViewController: UIViewController, AVAudioRecorderDelegate {
         audioRecorder.record()
     }
 
+    @IBAction func pauseOrResumeRecording(sender: UIButton) {
+        if pauseResumeButton.imageForState(UIControlState.Normal) == UIImage.init(named: "Pause") {
+            pauseResumeButton.setImage(UIImage.init(named: "Resume"), forState: UIControlState.Normal)
+            recordingInProgress.text = "Recording (paused)"
+            audioRecorder.pause()
+        } else {
+            pauseResumeButton.setImage(UIImage.init(named: "Pause"), forState: UIControlState.Normal)
+            recordingInProgress.text = "Recording"
+            audioRecorder.record()
+        }
+
+    }
     @IBAction func stopRecording(sender: UIButton) {
         audioRecorder.stop()
         let audioSession = AVAudioSession.sharedInstance()
@@ -68,6 +84,7 @@ class RecordSoundViewController: UIViewController, AVAudioRecorderDelegate {
         recordingInProgress.text = "Tap microphone to record"
         recordButton.enabled = true
         stopButton.hidden = true
+        pauseResumeButton.hidden = true
     }
     
     func audioRecorderDidFinishRecording(recorder: AVAudioRecorder, successfully flag: Bool) {

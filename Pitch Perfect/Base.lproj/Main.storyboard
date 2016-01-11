@@ -38,10 +38,17 @@
                                 <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="14"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
-                                <variation key="heightClass=regular" misplaced="YES">
-                                    <rect key="frame" x="181" y="458" width="238" height="18"/>
-                                </variation>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dSW-xW-2vc">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" image="Pause"/>
+                                <variation key="heightClass=regular" misplaced="YES">
+                                    <rect key="frame" x="271" y="521" width="59" height="58"/>
+                                </variation>
+                                <connections>
+                                    <action selector="pauseOrResumeRecording:" destination="BYZ-38-t0r" eventType="touchUpInside" id="e78-e6-3pi"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -49,7 +56,9 @@
                             <constraint firstItem="hB0-id-X05" firstAttribute="top" secondItem="Mfg-1Q-Tn7" secondAttribute="bottom" constant="8" id="HuD-4d-7No"/>
                             <constraint firstItem="Vbt-8r-LbT" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="MAi-Sy-wfi"/>
                             <constraint firstItem="Mfg-1Q-Tn7" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="PXu-LP-fdH"/>
+                            <constraint firstItem="dSW-xW-2vc" firstAttribute="top" secondItem="hB0-id-X05" secondAttribute="bottom" constant="30" id="Was-qv-BRr"/>
                             <constraint firstItem="hB0-id-X05" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="dVk-sQ-CwY"/>
+                            <constraint firstItem="dSW-xW-2vc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="f3L-Ve-hFf"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="Vbt-8r-LbT" secondAttribute="bottom" constant="20" id="hsc-kS-ObR"/>
                         </constraints>
                         <variation key="default">
@@ -57,14 +66,17 @@
                                 <exclude reference="Mfg-1Q-Tn7"/>
                                 <exclude reference="Vbt-8r-LbT"/>
                                 <exclude reference="hB0-id-X05"/>
+                                <exclude reference="dSW-xW-2vc"/>
                             </mask>
                             <mask key="constraints">
-                                <exclude reference="hsc-kS-ObR"/>
                                 <exclude reference="590-Io-DQs"/>
                                 <exclude reference="PXu-LP-fdH"/>
-                                <exclude reference="MAi-Sy-wfi"/>
                                 <exclude reference="HuD-4d-7No"/>
                                 <exclude reference="dVk-sQ-CwY"/>
+                                <exclude reference="Was-qv-BRr"/>
+                                <exclude reference="f3L-Ve-hFf"/>
+                                <exclude reference="MAi-Sy-wfi"/>
+                                <exclude reference="hsc-kS-ObR"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular">
@@ -72,19 +84,23 @@
                                 <include reference="Mfg-1Q-Tn7"/>
                                 <include reference="Vbt-8r-LbT"/>
                                 <include reference="hB0-id-X05"/>
+                                <include reference="dSW-xW-2vc"/>
                             </mask>
                             <mask key="constraints">
-                                <include reference="hsc-kS-ObR"/>
                                 <include reference="590-Io-DQs"/>
                                 <include reference="PXu-LP-fdH"/>
-                                <include reference="MAi-Sy-wfi"/>
                                 <include reference="HuD-4d-7No"/>
                                 <include reference="dVk-sQ-CwY"/>
+                                <include reference="Was-qv-BRr"/>
+                                <include reference="f3L-Ve-hFf"/>
+                                <include reference="MAi-Sy-wfi"/>
+                                <include reference="hsc-kS-ObR"/>
                             </mask>
                         </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Record" id="stB-fe-jud"/>
                     <connections>
+                        <outlet property="pauseResumeButton" destination="dSW-xW-2vc" id="zu4-cw-LOk"/>
                         <outlet property="recordButton" destination="Mfg-1Q-Tn7" id="gaj-SA-DLh"/>
                         <outlet property="recordingInProgress" destination="hB0-id-X05" id="TTt-vc-fAv"/>
                         <outlet property="stopButton" destination="Vbt-8r-LbT" id="dhd-GZ-e09"/>
@@ -227,6 +243,7 @@
         <image name="Chipmunk" width="100" height="100"/>
         <image name="Fast" width="100" height="100"/>
         <image name="Microphone" width="100" height="100"/>
+        <image name="Pause" width="80" height="80"/>
         <image name="Slow" width="100" height="100"/>
         <image name="Stop" width="50" height="50"/>
         <image name="Vader" width="100" height="100"/>
