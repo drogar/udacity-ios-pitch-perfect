@@ -42,6 +42,44 @@ class PlaySoundViewController: UIViewController {
         playSomeAudio(nil, pitchChange: -500)
     }
     
+    @IBAction func playReverbAudio(sender: UIButton) {
+        let audioPlayerNode = startAudioSession()
+        
+        let reverbEffect = AVAudioUnitReverb()
+        reverbEffect.loadFactoryPreset(AVAudioUnitReverbPreset.Cathedral)
+        reverbEffect.wetDryMix = 50.0
+        
+        configureAudioEngine(audioPlayerNode, effect: reverbEffect)
+        audioPlayerNode.scheduleFile(audioFile, atTime: nil, completionHandler: nil)
+        
+        do {
+            try audioEngine.start()
+            audioPlayerNode.play()
+        }
+        catch {
+            print("unable to play")
+        }
+
+    }
+    
+    @IBAction func playEchoAudio(sender: UIButton) {
+        let audioPlayerNode = startAudioSession()
+        
+        let echoEffect = AVAudioUnitDelay()
+        echoEffect.wetDryMix = 50.0
+        
+        configureAudioEngine(audioPlayerNode, effect: echoEffect)
+        audioPlayerNode.scheduleFile(audioFile, atTime: nil, completionHandler: nil)
+        
+        do {
+            try audioEngine.start()
+            audioPlayerNode.play()
+        }
+        catch {
+            print("unable to play")
+        }
+    }
+    
     func playSomeAudio(rateChange: Float?, pitchChange: Float?) {
         let audioPlayerNode = startAudioSession()
         
@@ -89,7 +127,7 @@ class PlaySoundViewController: UIViewController {
         return audioPlayerNode
     }
     
-    func configureAudioEngine(playerNode: AVAudioPlayerNode, effect: AVAudioUnitTimePitch) {
+    func configureAudioEngine(playerNode: AVAudioPlayerNode, effect: AVAudioUnit) {
         audioEngine.attachNode(playerNode)
         audioEngine.attachNode(effect)
         
