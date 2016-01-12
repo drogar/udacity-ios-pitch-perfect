@@ -12,8 +12,9 @@ import AVFoundation
 class PlaySoundViewController: UIViewController {
     var audioEngine: AVAudioEngine!
     var audioFile: AVAudioFile!
-    
     var receivedAudio: RecordedAudio!
+    
+    // MARK: UIViewController Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,25 +27,22 @@ class PlaySoundViewController: UIViewController {
         stopAudioSession()
         super.viewWillDisappear(animated)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+    
+    // MARK: - Play sound actions
     
     @IBAction func playSoundSlowly(sender: UIButton) {
-        playSomeAudio(0.5, pitchChange: nil)
+        playTimePitchedAudio(0.5, pitchChange: nil)
     }
     @IBAction func playSoundFast(sender: UIButton) {
-        playSomeAudio(2.0, pitchChange: nil)
+        playTimePitchedAudio(2.0, pitchChange: nil)
     }
 
     @IBAction func playChipmunkAudio(sender: UIButton) {
-        playSomeAudio(nil, pitchChange: 1000)
+        playTimePitchedAudio(nil, pitchChange: 1000)
     }
     
     @IBAction func playDarthAudio(sender: UIButton) {
-        playSomeAudio(nil, pitchChange: -500)
+        playTimePitchedAudio(nil, pitchChange: -500)
     }
     
     @IBAction func playReverbAudio(sender: UIButton) {
@@ -55,6 +53,7 @@ class PlaySoundViewController: UIViewController {
         reverbEffect.wetDryMix = 50.0
         
         configureAudioEngine(audioPlayerNode, effect: reverbEffect)
+        
         startPlaying(audioPlayerNode)
     }
     
@@ -69,7 +68,14 @@ class PlaySoundViewController: UIViewController {
         startPlaying(audioPlayerNode)
     }
     
-    func playSomeAudio(rateChange: Float?, pitchChange: Float?) {
+    
+    @IBAction func stopPlayback(sender: UIButton) {
+        stopAudioSession()
+    }
+    
+    // MARK: - Audio manipulation functions
+    
+    func playTimePitchedAudio(rateChange: Float?, pitchChange: Float?) {
         let audioPlayerNode = startAudioSession()
         
         let timePitch = AVAudioUnitTimePitch()
@@ -85,22 +91,6 @@ class PlaySoundViewController: UIViewController {
         configureAudioEngine(audioPlayerNode, effect: timePitch)
         
         startPlaying(audioPlayerNode)
-    }
-    
-    func startPlaying(audioPlayerNode: AVAudioPlayerNode){
-        audioPlayerNode.scheduleFile(audioFile, atTime: nil, completionHandler: nil)
-        
-        do {
-            try audioEngine.start()
-            audioPlayerNode.play()
-        }
-        catch {
-            print("unable to play")
-        }
-    }
-    
-    @IBAction func stopPlayback(sender: UIButton) {
-        stopAudioSession()
     }
     
     func startAudioSession() -> AVAudioPlayerNode {
@@ -125,15 +115,27 @@ class PlaySoundViewController: UIViewController {
         audioEngine.connect(effect, to: audioEngine.outputNode, format: audioFile.processingFormat)
     }
     
-    func stopAndResetEngine() {
-        audioEngine.stop()
-        audioEngine.reset()
+    func startPlaying(audioPlayerNode: AVAudioPlayerNode){
+        audioPlayerNode.scheduleFile(audioFile, atTime: nil, completionHandler: nil)
+        
+        do {
+            try audioEngine.start()
+            audioPlayerNode.play()
+        }
+        catch {
+            print("unable to play")
+        }
     }
-    
+
     func stopAudioSession() {
         stopAndResetEngine()
         
         let audioSession = AVAudioSession.sharedInstance()
         try! audioSession.setActive(false)
+    }
+
+    func stopAndResetEngine() {
+        audioEngine.stop()
+        audioEngine.reset()
     }
 }
