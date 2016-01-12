@@ -26,16 +26,6 @@
                                     <action selector="recordAudio:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6oG-Jm-Bkd"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vbt-8r-LbT">
-                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
-                                <state key="normal" image="Stop"/>
-                                <variation key="heightClass=regular" misplaced="YES">
-                                    <rect key="frame" x="275" y="616" width="50" height="164"/>
-                                </variation>
-                                <connections>
-                                    <action selector="stopRecording:" destination="BYZ-38-t0r" eventType="touchUpInside" id="u1g-N3-Z0j"/>
-                                </connections>
-                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap microphone to record" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hB0-id-X05">
                                 <rect key="frame" x="-42" y="-21" width="42" height="21"/>
                                 <fontDescription key="fontDescription" name="Chalkduster" family="Chalkduster" pointSize="14"/>
@@ -47,6 +37,13 @@
                                 <state key="normal" image="Pause"/>
                                 <connections>
                                     <action selector="pauseOrResumeRecording:" destination="BYZ-38-t0r" eventType="touchUpInside" id="e78-e6-3pi"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Vbt-8r-LbT">
+                                <rect key="frame" x="-23" y="-15" width="46" height="30"/>
+                                <state key="normal" image="Stop"/>
+                                <connections>
+                                    <action selector="stopRecording:" destination="BYZ-38-t0r" eventType="touchUpInside" id="u1g-N3-Z0j"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -65,9 +62,9 @@
                         <variation key="default">
                             <mask key="subviews">
                                 <exclude reference="Mfg-1Q-Tn7"/>
-                                <exclude reference="Vbt-8r-LbT"/>
                                 <exclude reference="hB0-id-X05"/>
                                 <exclude reference="dSW-xW-2vc"/>
+                                <exclude reference="Vbt-8r-LbT"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="590-Io-DQs"/>
@@ -84,9 +81,9 @@
                         <variation key="heightClass=regular">
                             <mask key="subviews">
                                 <include reference="Mfg-1Q-Tn7"/>
-                                <include reference="Vbt-8r-LbT"/>
                                 <include reference="hB0-id-X05"/>
                                 <include reference="dSW-xW-2vc"/>
+                                <include reference="Vbt-8r-LbT"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="590-Io-DQs"/>
