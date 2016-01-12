@@ -21,6 +21,11 @@ class PlaySoundViewController: UIViewController {
         audioEngine = AVAudioEngine()
         audioFile = try! AVAudioFile(forReading: receivedAudio.filePathUrl)
     }
+    
+    override func viewWillDisappear(animated: Bool) {
+        stopAudioSession()
+        super.viewWillDisappear(animated)
+    }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -95,10 +100,7 @@ class PlaySoundViewController: UIViewController {
     }
     
     @IBAction func stopPlayback(sender: UIButton) {
-        stopAndResetEngine()
-        
-        let audioSession = AVAudioSession.sharedInstance()
-        try! audioSession.setActive(false)
+        stopAudioSession()
     }
     
     func startAudioSession() -> AVAudioPlayerNode {
@@ -126,5 +128,12 @@ class PlaySoundViewController: UIViewController {
     func stopAndResetEngine() {
         audioEngine.stop()
         audioEngine.reset()
+    }
+    
+    func stopAudioSession() {
+        stopAndResetEngine()
+        
+        let audioSession = AVAudioSession.sharedInstance()
+        try! audioSession.setActive(false)
     }
 }
