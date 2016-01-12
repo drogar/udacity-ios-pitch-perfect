@@ -50,16 +50,7 @@ class PlaySoundViewController: UIViewController {
         reverbEffect.wetDryMix = 50.0
         
         configureAudioEngine(audioPlayerNode, effect: reverbEffect)
-        audioPlayerNode.scheduleFile(audioFile, atTime: nil, completionHandler: nil)
-        
-        do {
-            try audioEngine.start()
-            audioPlayerNode.play()
-        }
-        catch {
-            print("unable to play")
-        }
-
+        startPlaying(audioPlayerNode)
     }
     
     @IBAction func playEchoAudio(sender: UIButton) {
@@ -69,15 +60,8 @@ class PlaySoundViewController: UIViewController {
         echoEffect.wetDryMix = 50.0
         
         configureAudioEngine(audioPlayerNode, effect: echoEffect)
-        audioPlayerNode.scheduleFile(audioFile, atTime: nil, completionHandler: nil)
         
-        do {
-            try audioEngine.start()
-            audioPlayerNode.play()
-        }
-        catch {
-            print("unable to play")
-        }
+        startPlaying(audioPlayerNode)
     }
     
     func playSomeAudio(rateChange: Float?, pitchChange: Float?) {
@@ -95,6 +79,10 @@ class PlaySoundViewController: UIViewController {
         
         configureAudioEngine(audioPlayerNode, effect: timePitch)
         
+        startPlaying(audioPlayerNode)
+    }
+    
+    func startPlaying(audioPlayerNode: AVAudioPlayerNode){
         audioPlayerNode.scheduleFile(audioFile, atTime: nil, completionHandler: nil)
         
         do {
