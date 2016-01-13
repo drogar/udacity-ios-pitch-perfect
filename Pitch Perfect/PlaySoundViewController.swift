@@ -70,7 +70,7 @@ class PlaySoundViewController: UIViewController {
     
     
     @IBAction func stopPlayback(sender: UIButton) {
-        stopAudioSession()
+        stopAndResetEngine()
     }
     
     // MARK: - Audio manipulation functions
